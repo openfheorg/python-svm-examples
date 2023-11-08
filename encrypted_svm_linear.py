@@ -2,17 +2,14 @@ from openfhe import *
 import numpy as np
 import pandas as pd
 from time import time
-from sklearn.metrics import roc_auc_score
 
 # Load the data using pandas
 print("---- Loading Data and Model ----")
-X_test = pd.read_csv('data/credit_approval_train.csv')
+X_test = pd.read_csv('data/credit_approval_test.csv')
 x = X_test.to_numpy().flatten().tolist()
-y_test = pd.read_csv('data/credit_approval_target_test.csv')
-y_true = y_test.to_numpy().flatten().tolist()
-y_pred_linear = np.loadtxt("data/y_pred_linear.txt")
-# Get number of features
-n = X_test.shape[1]
+ytestscore = np.loadtxt("data/ytestscore.txt")
+# Get number of features (n = 4)
+n = len(x)
 print("---- Data Loaded! ----")
 
 
@@ -68,12 +65,9 @@ print(f"Linear-SVM inference took {timeEvalSVMTime} ms")
 # Decryption and output
 
 result = cc.Decrypt(ct_res, keys.secretKey)
-# calculatee AUC betwwen y_true and result 
-auc_enc = roc_auc_score(y_true, result)
-auc_unenc = roc_auc_score(y_true, y_pred_linear)
-
-print(f"Encrypted AUC: {auc_enc}")
-print(f"Unencrypted AUC: {auc_unenc}")
+result.SetLength(batchSize)
+print(f"Expected score = {ytestscore}")
+print(f"Predicted score (1st element) = {result}")
 
 
 

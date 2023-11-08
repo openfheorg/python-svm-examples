@@ -15,7 +15,7 @@ X = credit_approval.data.features[cont_features].dropna()
 # Drop y lines that were na in X
 y = credit_approval.data.targets.loc[X.index]
 # Replace + by 1 and - by 0
-y = y.replace({'+': 1, '-': 0})
+y = y.replace({'+': 1, '-': -1})
 # Standardize X with StandardScaler
 scaler = StandardScaler()
 X = pd.DataFrame(scaler.fit_transform(X))
@@ -30,6 +30,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.20, rand
 
 # Save train and test data
 X_train.to_csv('data/credit_approval_train.csv', index=False)
-X_test.to_csv('data/credit_approval_test.csv', index=False)
 y_train.to_csv('data/credit_approval_target_train.csv', index=False)
-y_test.to_csv('data/credit_approval_target_test.csv', index=False)
+# Saving just the first line for inference
+X_test.head(1).to_csv('data/credit_approval_test.csv', index=False)
+y_test.head(1).to_csv('data/credit_approval_target_test.csv', index=False)
