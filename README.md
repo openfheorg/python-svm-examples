@@ -19,6 +19,7 @@ git clone git@github.com:openfheorg/openfhe-development.git
 cd openfhe-development
 mkdir build
 cd build
+cmake ..
 make -j N  # number of processors - 4 in my case
 sudo make install && cd ../.. # to get back to original path
 ```
