@@ -32,7 +32,7 @@ cd openfhe-python
 mkdir build
 cd build
 cmake .. # or alternatively for conda: cmake .. -DPYTHON_EXECUTABLE_PATH=$CONDA_PREFIX/bin/python
-make -j 26
+make -j N  # number of processors - 4 in my case
 sudo make install && cd ../.. # to get back to original path
 ```
 
