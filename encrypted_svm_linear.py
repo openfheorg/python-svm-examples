@@ -6,6 +6,7 @@ from time import time
 # Load the data using pandas
 print("---- Loading Data and Model ----")
 X_test = pd.read_csv('data/credit_approval_test.csv')
+# flatten operation transforms the dataframe into a 1-dimensional np array
 x = X_test.to_numpy().flatten().tolist()
 ytestscore = np.loadtxt("data/ytestscore.txt")
 # Get number of features (n = 4)
@@ -37,6 +38,9 @@ print(f"CKKS is using ring dimension {cc.GetRingDimension()}")
 
 # Key Generation
 keys = cc.KeyGen()
+# keys is a KeyPair containing a public key and a secret key
+
+# Generating evaluation keys:
 cc.EvalMultKeyGen(keys.secretKey)
 cc.EvalSumKeyGen(keys.secretKey)
 
